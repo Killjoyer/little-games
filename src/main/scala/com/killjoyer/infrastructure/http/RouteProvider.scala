@@ -8,7 +8,7 @@ import sttp.tapir.swagger.bundle.SwaggerInterpreter
 
 class RouteProvider(echoModule: EchoModule) {
 
-  private val swaggerEndpoints = SwaggerInterpreter().fromServerEndpoints[Task](echoModule.endpoints, "Our pets", "1.0")
+  private val swaggerEndpoints = SwaggerInterpreter().fromServerEndpoints[Task](echoModule.endpoints, "Cartographers", "1.0")
 
   val routes: List[ZServerEndpoint[Any, ZioStreams]] = echoModule.endpoints ++ swaggerEndpoints
 }

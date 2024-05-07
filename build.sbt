@@ -10,7 +10,7 @@ Compile / PB.targets := Seq(
 
 lazy val root = (project in file("."))
   .settings(
-    name := "cartographers",
+    name := "little-games",
     scalacOptions ++= Seq("-Ywarn-unused", "-Ymacro-annotations"),
     semanticdbEnabled := true,
     semanticdbVersion := scalafixSemanticdb.revision,

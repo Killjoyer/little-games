@@ -14,11 +14,13 @@ object Dependencies {
   }
 
   object tapir {
-    lazy val version       = "1.4.0"
+    lazy val version = "1.4.0"
+
     lazy val core          = "com.softwaremill.sttp.tapir" %% "tapir-core"              % version
     lazy val zio           = "com.softwaremill.sttp.tapir" %% "tapir-zio"               % version
     lazy val zioHttpServer = "com.softwaremill.sttp.tapir" %% "tapir-zio-http-server"   % version
     lazy val swagger       = "com.softwaremill.sttp.tapir" %% "tapir-swagger-ui-bundle" % version
+    lazy val circe         = "com.softwaremill.sttp.tapir" %% "tapir-json-circe"        % version
   }
 
   object circe {
@@ -38,7 +40,7 @@ object Dependencies {
   }
 
   object grpc {
-      lazy val netty = "io.grpc" % "grpc-netty" % "1.41.0"
-      lazy val runtime = "com.thesamet.scalapb" %% "scalapb-runtime-grpc" % scalapb.compiler.Version.scalapbVersion
+    lazy val netty   = "io.grpc"               % "grpc-netty"           % "1.41.0"
+    lazy val runtime = "com.thesamet.scalapb" %% "scalapb-runtime-grpc" % scalapb.compiler.Version.scalapbVersion
   }
 }

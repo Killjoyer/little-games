@@ -2,9 +2,12 @@ package com.killjoyer.modules.echo
 
 import sttp.tapir.ztapir._
 import zio._
+
 case class EchoModule(handler: EchoHandler) {
+
   private val echoEndpoint: ZServerEndpoint[Any, Any] =
     endpoint
+      .tag("Echo")
       .get
       .in("api" / "echo" / path[String]("input"))
       .out(stringBody)

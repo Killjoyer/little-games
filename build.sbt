@@ -11,7 +11,7 @@ Compile / PB.targets := Seq(
 lazy val root = (project in file("."))
   .settings(
     name := "cartographers",
-    scalacOptions ++= Seq("-Ywarn-unused", "Ymacro-annotations"),
+    scalacOptions ++= Seq("-Ywarn-unused", "-Ymacro-annotations"),
     semanticdbEnabled := true,
     semanticdbVersion := scalafixSemanticdb.revision,
     libraryDependencies ++= Seq(
@@ -27,6 +27,7 @@ lazy val root = (project in file("."))
       tapir.zio,
       tapir.zioHttpServer,
       tapir.swagger,
+      tapir.circe,
       circe.core,
       tofu.zioLogging,
       tofu.logging,

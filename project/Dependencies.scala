@@ -36,4 +36,9 @@ object Dependencies {
     lazy val version = "2.9.0"
     lazy val core    = "org.typelevel" %% "cats-core" % version
   }
+
+  object grpc {
+      lazy val netty = "io.grpc" % "grpc-netty" % "1.41.0"
+      lazy val runtime = "com.thesamet.scalapb" %% "scalapb-runtime-grpc" % scalapb.compiler.Version.scalapbVersion
+  }
 }

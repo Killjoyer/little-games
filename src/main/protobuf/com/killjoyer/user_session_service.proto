@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.killjoyer.userSession";
+option java_outer_classname = "UserSessionServiceProto";
+
+package lobby;
+
+service UserSessionService {
+  rpc CreateSession(InitiateSession) returns (stream ServerResponse) {}
+}
+
+message InitiateSession {
+  reserved 1 to 10;
+}
+
+message ServerResponse {
+  oneof msg {
+    LobbyCreationResponse lobbyCreationResponse = 1;
+    CreateSessionResponse sessionCreationResponse = 2;
+  }
+}
+
+message CreateSessionResponse {
+  UUID user_id = 1;
+}
+
+
+message LobbyCreationResponse {
+  UUID lobby_id = 2;
+}
+
+message UUID {
+  int64 uuid_most_part = 1;
+  int64 uuid_least_part = 2;
+}

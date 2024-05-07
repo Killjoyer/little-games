@@ -1,7 +1,7 @@
 package com.killjoyer.infrastructure.http
 
 import com.killjoyer.infrastructure.config.HttpServerConfig
-import sttp.tapir.server.ziohttp.{ZioHttpInterpreter, ZioHttpServerOptions}
+import sttp.tapir.server.ziohttp.ZioHttpInterpreter
 import zio._
 import zio.http._
 

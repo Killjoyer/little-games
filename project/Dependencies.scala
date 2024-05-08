@@ -2,10 +2,11 @@ import sbt._
 
 object Dependencies {
   object zio {
-    lazy val version     = "2.0.13"
+    lazy val version     = "2.0.22"
     lazy val core        = "dev.zio" %% "zio"              % version
-    lazy val test        = "dev.zio" %% "zio-test"         % version % Test
-    lazy val catsInterop = "dev.zio" %% "zio-interop-cats" % "23.0.0.5"
+    lazy val test        = "dev.zio" %% "zio-test"         % version      % Test
+    lazy val mock        = "dev.zio" %% "zio-mock"         % "1.0.0-RC12" % Test
+    lazy val catsInterop = "dev.zio" %% "zio-interop-cats" % "23.1.0.2"
 
     lazy val configVersion  = "3.0.7"
     lazy val config         = "dev.zio" %% "zio-config"          % configVersion
@@ -40,7 +41,13 @@ object Dependencies {
   }
 
   object grpc {
-    lazy val netty   = "io.grpc"               % "grpc-netty"           % "1.41.0"
+    lazy val netty   = "io.grpc"               % "grpc-netty"           % scalapb.compiler.Version.grpcJavaVersion
     lazy val runtime = "com.thesamet.scalapb" %% "scalapb-runtime-grpc" % scalapb.compiler.Version.scalapbVersion
   }
+}
+
+object doobie {
+  lazy val version  = "1.0.0-RC4"
+  lazy val core     = "org.tpolecat" %% "doobie-core"     % version
+  lazy val postgres = "org.tpolecat" %% "doobie-postgres" % version
 }

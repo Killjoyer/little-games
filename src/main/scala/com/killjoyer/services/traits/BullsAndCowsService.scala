@@ -5,8 +5,8 @@ import io.circe.generic.JsonCodec
 import zio.Task
 
 trait BullsAndCowsService {
-  def getResult(guess: String, answer: String): Task[BullsAndCowsResult]
-  def generateWord: Task[String]
+  def getResult(guess: String, answer: String, allowDuplicates: Boolean): Task[BullsAndCowsResult]
+  def generateWord(wordLength: Int, allowDuplicates: Boolean): Task[String]
 }
 
  object BullsAndCowsService {

@@ -15,10 +15,11 @@ lazy val root = (project in file("."))
     semanticdbEnabled := true,
     semanticdbVersion := scalafixSemanticdb.revision,
     libraryDependencies ++= Seq(
-      "io.grpc"               % "grpc-netty"           % scalapb.compiler.Version.grpcJavaVersion,
-      "com.thesamet.scalapb" %% "scalapb-runtime-grpc" % scalapb.compiler.Version.scalapbVersion,
+      grpc.netty,
+      grpc.runtime,
       zio.core,
       zio.test,
+      zio.mock,
       zio.catsInterop,
       zio.config,
       zio.configTypesafe,
@@ -31,7 +32,9 @@ lazy val root = (project in file("."))
       circe.core,
       tofu.zioLogging,
       tofu.logging,
-      cats.core
+      cats.core,
+      doobie.core,
+      doobie.postgres
     ),
     testFrameworks += new TestFramework("zio.test.sbt.ZTestFramework")
   )

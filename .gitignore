@@ -130,3 +130,4 @@ e2e/*.map
 # System Files
 .DS_Store/
 
+/src/main/resources/custom.conf

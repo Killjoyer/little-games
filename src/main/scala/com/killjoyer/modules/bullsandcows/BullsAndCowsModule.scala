@@ -20,13 +20,14 @@ case class BullsAndCowsModule(handler: BullsAndCowsHandler) {
   private val startGame: ZServerEndpoint[Any, Any] =
     bcEndpoint
       .post
+      .in("start")
       .in(jsonBody[BullsAndCowsStartGameRequest])
       .out(jsonBody[BullsAndCowsStartGameResponse])
       .zServerLogic(handler.bullsAndCowsStartGame)
 
   private val bullsAndCows: ZServerEndpoint[Any, Any] =
     bcEndpoint
-      .get
+      .post
       .in(query[String]("guess") / query[UUID]("gameId"))
       .out(jsonBody[BullsAndCowsResponse])
       .zServerLogic { case (guess, gameId) => handler.bullsAndCows(guess, gameId) }

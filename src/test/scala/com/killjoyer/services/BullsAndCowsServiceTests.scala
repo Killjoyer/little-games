@@ -7,6 +7,8 @@ import zio.test.Assertion.equalTo
 import zio.{Scope, ZIO}
 import zio.test._
 
+import scala.tools.nsc.tasty.SafeEq
+
 object BullsAndCowsServiceTests extends ZIOSpecDefault {
   def useService[R, E, A](f: BullsAndCowsService => ZIO[R, E, A]): ZIO[BullsAndCowsService with R, E, A] =
     ZIO.service[BullsAndCowsService].flatMap(f(_))
@@ -15,6 +17,6 @@ object BullsAndCowsServiceTests extends ZIOSpecDefault {
     suite("Bulls and Cows service tests")(test("empty result") {
       useService(_.getResult("fghij", "abcde", allowDuplicates = false))
         .provide(MockDictionaryRepository.empty >>> BullsAndCowsServiceLive.layer)
-        .map(assert(_)(equalTo(BullsAndCowsResult("fghij", 0, 0))))
+        .map(v => assertTrue(v === BullsAndCowsResult("fghij", 0, 0)))
     })
 }

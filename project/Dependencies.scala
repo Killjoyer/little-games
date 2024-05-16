@@ -5,6 +5,7 @@ object Dependencies {
     lazy val version     = "2.1.0"
     lazy val core        = "dev.zio" %% "zio"              % version
     lazy val test        = "dev.zio" %% "zio-test"         % version      % Test
+    lazy val testSbt     = "dev.zio" %% "zio-test-sbt"     % version      % Test
     lazy val mock        = "dev.zio" %% "zio-mock"         % "1.0.0-RC12" % Test
     lazy val catsInterop = "dev.zio" %% "zio-interop-cats" % "23.1.0.2"
 

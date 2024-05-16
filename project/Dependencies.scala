@@ -8,7 +8,7 @@ object Dependencies {
     lazy val mock        = "dev.zio" %% "zio-mock"         % "1.0.0-RC12" % Test
     lazy val catsInterop = "dev.zio" %% "zio-interop-cats" % "23.1.0.2"
 
-    lazy val configVersion  = "3.0.7"
+    lazy val configVersion  = "4.0.2"
     lazy val config         = "dev.zio" %% "zio-config"          % configVersion
     lazy val configTypesafe = "dev.zio" %% "zio-config-typesafe" % configVersion
     lazy val configMagnolia = "dev.zio" %% "zio-config-magnolia" % configVersion

@@ -1,7 +1,7 @@
-import Dependencies._
+import Dependencies.*
 
 ThisBuild / scalaVersion      := "2.13.10"
-ThisBuild / organization      := "com.killjoyer"
+ThisBuild / organization      := "com.github.killjoyer"
 ThisBuild / semanticdbEnabled := true
 ThisBuild / semanticdbVersion := scalafixSemanticdb.revision
 ThisBuild / scalacOptions     := Seq("-Ywarn-unused", "-Ymacro-annotations", "-Wunused:imports")

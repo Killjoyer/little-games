@@ -1,4 +1,4 @@
-addSbtPlugin("ch.epfl.scala" % "sbt-scalafix" % "0.10.4")
+addSbtPlugin("ch.epfl.scala" % "sbt-scalafix" % "0.12.1")
 addSbtPlugin("com.thesamet"  % "sbt-protoc"   % "1.0.2")
 addSbtPlugin("org.scalameta" % "sbt-scalafmt" % "2.5.2")
 

@@ -1,6 +1,6 @@
 package com.github.killjoyer.infrastructure.config
 
-final case class AppConfig(http: HttpServerConfig, db: DatabaseConfig)
+final case class BuildConfig(http: HttpServerConfig, db: DatabaseConfig)
 
 final case class HttpServerConfig(port: Int, host: String)
 

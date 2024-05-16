@@ -1,6 +1,7 @@
 package com.github.killjoyer.infrastructure.config
 
 import com.typesafe.config.ConfigFactory
+import zio.&
 import zio.ZEnvironment
 import zio.ZIO
 import zio.ZLayer
@@ -15,7 +16,7 @@ object ConfigLoader {
       .fromTypesafeConfig(ZIO.attempt(ConfigFactory.load()), descriptor[AppConfig])
       .map { env =>
         val appConfig = env.get
-        ZEnvironment(appConfig.http).add(appConfig.db)
+        ZEnvironment(appConfig.build.http).add(appConfig.build.db)
       }
 
 }

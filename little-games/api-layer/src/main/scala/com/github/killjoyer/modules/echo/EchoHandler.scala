@@ -10,7 +10,7 @@ final case class EchoHandler() {
   def echo(input: String): ZIO[Any, Nothing, String] = ZIO.succeed(input.reverse)
 
   val websocketEcho: UIO[Stream[Throwable, String] => Stream[Throwable, String]] =
-    ZIO.succeed(requests => requests.map(_.reverse))
+    ZIO.succeed(_.map(_.reverse))
 
 }
 

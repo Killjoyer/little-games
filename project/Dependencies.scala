@@ -1,8 +1,8 @@
-import sbt._
+import sbt.*
 
 object Dependencies {
   object zio {
-    lazy val version     = "2.0.22"
+    lazy val version     = "2.1.0"
     lazy val core        = "dev.zio" %% "zio"              % version
     lazy val test        = "dev.zio" %% "zio-test"         % version      % Test
     lazy val mock        = "dev.zio" %% "zio-mock"         % "1.0.0-RC12" % Test
@@ -15,7 +15,7 @@ object Dependencies {
   }
 
   object tapir {
-    lazy val version = "1.4.0"
+    lazy val version = "1.10.7"
 
     lazy val core          = "com.softwaremill.sttp.tapir" %% "tapir-core"              % version
     lazy val zio           = "com.softwaremill.sttp.tapir" %% "tapir-zio"               % version
@@ -32,13 +32,13 @@ object Dependencies {
   }
 
   object tofu {
-    lazy val version    = "0.11.1"
+    lazy val version    = "0.13.1"
     lazy val zioLogging = "tf.tofu" %% "tofu-zio2-logging" % version
     lazy val logging    = "tf.tofu" %% "tofu-logging"      % version
   }
 
   object cats {
-    lazy val version = "2.9.0"
+    lazy val version = "2.10.0"
     lazy val core    = "org.typelevel" %% "cats-core" % version
   }
 

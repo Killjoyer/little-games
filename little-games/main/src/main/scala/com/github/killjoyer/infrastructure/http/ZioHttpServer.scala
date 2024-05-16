@@ -9,7 +9,7 @@ class ZioHttpServer(routeProvider: RouteProvider, config: HttpServerConfig) {
 
   def start: ZIO[Any, Throwable, Nothing] =
     Server
-      .serve(ZioHttpInterpreter().toHttp(routeProvider.routes).withDefaultErrorResponse)
+      .serve(ZioHttpInterpreter().toHttp(routeProvider.routes))
       .provide(ZLayer.succeed(Server.Config.default.binding(config.host, config.port)), Server.live)
 
 }

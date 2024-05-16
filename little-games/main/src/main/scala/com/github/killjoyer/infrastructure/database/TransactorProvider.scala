@@ -17,7 +17,7 @@ object TransactorProvider {
              url = config.url,
              user = config.user,
              password = config.password,
-             logHandler = None
+             logHandler = None,
            )
     } yield tr)
 

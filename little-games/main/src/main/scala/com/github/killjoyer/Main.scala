@@ -34,7 +34,7 @@ object Main extends ZIOAppDefault {
         BullsAndCowsHandler.layer,
         ZLayer.succeed(Random.RandomLive),
         RuDbDictionaryRepository.layer,
-        TransactorProvider.transactorLayer
+        TransactorProvider.transactorLayer,
       )
 
 }

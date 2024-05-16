@@ -14,6 +14,8 @@ Compile / PB.targets := Seq(
 lazy val commonLibraries =
   Seq(
     zio.core,
+    zio.stream,
+    zio.concurrent,
     zio.test,
     zio.testSbt,
     zio.mock,

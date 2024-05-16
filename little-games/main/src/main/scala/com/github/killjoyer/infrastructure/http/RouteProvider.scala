@@ -12,11 +12,17 @@ import zio.ZLayer
 final case class RouteProvider(echoModule: EchoModule, bullsAndCowsModule: BullsAndCowsModule) {
 
   private val swaggerEndpoints =
-    SwaggerInterpreter().fromServerEndpoints[Task](echoModule.endpoints ++ bullsAndCowsModule.endpoints, "Cartographers", "1.0")
+    SwaggerInterpreter()
+      .fromServerEndpoints[Task](echoModule.endpoints ++ bullsAndCowsModule.endpoints, "Cartographers", "1.0")
 
-  val routes: List[ZServerEndpoint[Any, ZioStreams]] = echoModule.endpoints ++ bullsAndCowsModule.endpoints ++ swaggerEndpoints
+  val routes: List[ZServerEndpoint[Any, ZioStreams]] =
+    echoModule.endpoints ++ bullsAndCowsModule.endpoints ++ swaggerEndpoints
+
 }
 
 object RouteProvider {
-  val layer: ZLayer[EchoModule & BullsAndCowsModule, Nothing, RouteProvider] = ZLayer.fromFunction(RouteProvider.apply _)
+
+  val layer: ZLayer[EchoModule & BullsAndCowsModule, Nothing, RouteProvider] =
+    ZLayer.fromFunction(RouteProvider.apply _)
+
 }

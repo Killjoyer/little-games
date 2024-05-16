@@ -14,8 +14,11 @@ final case class EchoModule(handler: EchoHandler) {
       .zServerLogic(handler.echo)
 
   val endpoints: List[ZServerEndpoint[Any, Any]] = List(echoEndpoint)
+
 }
 
 object EchoModule {
+
   val layer: ZLayer[EchoHandler, Nothing, EchoModule] = ZLayer.fromFunction(new EchoModule(_))
+
 }

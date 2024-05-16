@@ -14,14 +14,17 @@ import zio.durationInt
 import zio.interop.catz.concurrentInstance
 
 class RuDbDictionaryRepository(random: Random, words: Task[Vector[String]]) extends DictionaryRepository {
+
   override def generateWord(length: Int, allowDuplicates: Boolean): Task[String] =
     words.flatMap { v =>
       val suitableWords = v.filter(s => s.length === length && (allowDuplicates || s.toSet.size === length))
       random.nextIntBounded(suitableWords.size).map(suitableWords)
     }
+
 }
 
 object RuDbDictionaryRepository {
+
   val layer: ZLayer[Transactor[Task] & Random, Nothing, DictionaryRepository] =
     ZLayer.fromZIO(for {
       tr    <- ZIO.service[Transactor[Task]]
@@ -34,4 +37,5 @@ object RuDbDictionaryRepository {
       .query[String]
       .to[Vector]
       .transact(transactor)
+
 }

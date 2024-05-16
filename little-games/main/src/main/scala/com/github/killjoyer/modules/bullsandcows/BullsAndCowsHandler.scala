@@ -15,7 +15,12 @@ import zio.Ref
 import zio.ZIO
 import zio.ZLayer
 
-final case class BullsAndCowsHandler(service: BullsAndCowsService, random: Random, gamesRef: Ref.Synchronized[Map[UUID, BullsAndCowsState]]) {
+final case class BullsAndCowsHandler(
+    service: BullsAndCowsService,
+    random: Random,
+    gamesRef: Ref.Synchronized[Map[UUID, BullsAndCowsState]]
+) {
+
   def bullsAndCows(guess: String, gameId: UUID): IO[ServerError, BullsAndCowsResponse] =
     gamesRef.modifyZIO { games =>
       games
@@ -28,7 +33,10 @@ final case class BullsAndCowsHandler(service: BullsAndCowsService, random: Rando
             .mapBoth(
               th => ServerError("INTERNAL_ERROR", th.getMessage),
               result =>
-                (BullsAndCowsResponse(gameId, result, state.history), games.updated(gameId, state.copy(history = result :: state.history)))
+                (
+                  BullsAndCowsResponse(gameId, result, state.history),
+                  games.updated(gameId, state.copy(history = result :: state.history))
+                )
             )
         }
     }
@@ -39,13 +47,17 @@ final case class BullsAndCowsHandler(service: BullsAndCowsService, random: Rando
         for {
           word <- service.generateWord(request.wordLength, request.allowDuplicates)
           uuid <- random.nextUUID
-        } yield (BullsAndCowsStartGameResponse(uuid), games.updated(uuid, BullsAndCowsState(word, request.allowDuplicates, List())))
+        } yield (
+          BullsAndCowsStartGameResponse(uuid),
+          games.updated(uuid, BullsAndCowsState(word, request.allowDuplicates, List()))
+        )
       )
       .mapError(th => ServerError("INTERNAL_ERROR", th.getMessage))
 
 }
 
 object BullsAndCowsHandler {
+
   final case class BullsAndCowsState(answer: String, allowDuplicates: Boolean, history: List[BullsAndCowsResult])
 
   val layer: ZLayer[Random with BullsAndCowsService, Nothing, BullsAndCowsHandler] =
@@ -54,4 +66,5 @@ object BullsAndCowsHandler {
       random <- ZIO.service[Random]
       ref    <- Ref.Synchronized.make(Map.empty[UUID, BullsAndCowsState])
     } yield BullsAndCowsHandler(srv, random, ref))
+
 }

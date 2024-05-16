@@ -16,6 +16,7 @@ import tofu.logging.zlogs._
 import zio._
 
 object Main extends ZIOAppDefault {
+
   override val bootstrap: ZLayer[ZIOAppArgs, Any, Any] =
     Runtime.removeDefaultLoggers >>> TofuZLogger.addToRuntime
 
@@ -35,4 +36,5 @@ object Main extends ZIOAppDefault {
         RuDbDictionaryRepository.layer,
         TransactorProvider.transactorLayer
       )
+
 }

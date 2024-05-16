@@ -11,8 +11,12 @@ class ZioHttpServer(routeProvider: RouteProvider, config: HttpServerConfig) {
     Server
       .serve(ZioHttpInterpreter().toHttp(routeProvider.routes).withDefaultErrorResponse)
       .provide(ZLayer.succeed(Server.Config.default.binding(config.host, config.port)), Server.live)
+
 }
 
 object ZioHttpServer {
-  val layer: ZLayer[RouteProvider with HttpServerConfig, Nothing, ZioHttpServer] = ZLayer.fromFunction(new ZioHttpServer(_, _))
+
+  val layer: ZLayer[RouteProvider with HttpServerConfig, Nothing, ZioHttpServer] =
+    ZLayer.fromFunction(new ZioHttpServer(_, _))
+
 }

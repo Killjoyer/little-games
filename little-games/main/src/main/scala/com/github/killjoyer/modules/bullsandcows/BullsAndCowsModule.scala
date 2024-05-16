@@ -15,30 +15,31 @@ import sttp.tapir.ztapir._
 import zio.ZLayer
 
 final case class BullsAndCowsModule(handler: BullsAndCowsHandler) {
+
   private val bcEndpoint = endpoint
     .in("api" / "bulls-cows")
     .tag("Bulls and Cows")
     .errorOut(jsonBody[ServerError])
 
   private val startGame: ZServerEndpoint[Any, Any] =
-    bcEndpoint
-      .post
+    bcEndpoint.post
       .in("start")
       .in(jsonBody[BullsAndCowsStartGameRequest])
       .out(jsonBody[BullsAndCowsStartGameResponse])
       .zServerLogic(handler.bullsAndCowsStartGame)
 
   private val bullsAndCows: ZServerEndpoint[Any, Any] =
-    bcEndpoint
-      .post
+    bcEndpoint.post
       .in(query[String]("guess") / query[UUID]("gameId"))
       .out(jsonBody[BullsAndCowsResponse])
       .zServerLogic { case (guess, gameId) => handler.bullsAndCows(guess, gameId) }
 
   val endpoints: List[ZServerEndpoint[Any, Any]] = List(startGame, bullsAndCows)
+
 }
 
 object BullsAndCowsModule {
+
   @JsonCodec
   final case class BullsAndCowsStartGameRequest(wordLength: Int, allowDuplicates: Boolean)
 
@@ -52,4 +53,5 @@ object BullsAndCowsModule {
   final case class ServerError(code: String, message: String)
 
   val layer: ZLayer[BullsAndCowsHandler, Nothing, BullsAndCowsModule] = ZLayer.fromFunction(BullsAndCowsModule.apply _)
+
 }

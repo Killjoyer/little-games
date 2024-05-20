@@ -13,11 +13,19 @@ final case class EchoModule(handler: EchoHandler) {
       .tag("Echo")
       .in("api" / "echo")
 
-  private val echoEndpoint: ZServerEndpoint[Any, Any] =
+  private val echo: ZServerEndpoint[Any, Any] =
     baseEndpoint.get
       .in("plain" / path[String]("input"))
       .out(stringBody)
       .zServerLogic(handler.echo)
+
+  private val publish: ZServerEndpoint[Any, Any] =
+    baseEndpoint.post
+      .in("publish" / query[String]("receiver") / query[String]("event"))
+      .out(stringBody)
+      .zServerLogic { case (receiver, event) =>
+        handler.publish(receiver, event)
+      }
 
   private val webSocketEcho: ZServerEndpoint[Any, ZioStreams with WebSockets] =
     baseEndpoint
@@ -25,7 +33,14 @@ final case class EchoModule(handler: EchoHandler) {
       .out(webSocketBody[String, CodecFormat.TextPlain, String, CodecFormat.TextPlain](ZioStreams))
       .zServerLogic(_ => handler.websocketEcho)
 
-  val endpoints: List[ZServerEndpoint[Any, ZioStreams with WebSockets]] = List(echoEndpoint, webSocketEcho)
+  private val userSpecificEcho: ZServerEndpoint[Any, ZioStreams with WebSockets] =
+    baseEndpoint
+      .in("users" / "websocket")
+      .out(webSocketBody[String, CodecFormat.TextPlain, String, CodecFormat.TextPlain](ZioStreams))
+      .zServerLogic(_ => handler.userSpecificEcho)
+
+  val endpoints: List[ZServerEndpoint[Any, ZioStreams with WebSockets]] =
+    List(echo, publish, webSocketEcho, userSpecificEcho)
 
   val nonRenderEndpoints: List[ZServerEndpoint[Any, ZioStreams with WebSockets]] = List()
 

@@ -51,7 +51,7 @@ lazy val dataAccessLayer = (project in file("little-games/data-layer"))
   )
 
 lazy val apiLayer = (project in file("little-games/api-layer"))
-  .dependsOn(domain, serviceLayer, dataAccessLayer)
+  .dependsOn(domain, serviceLayer)
   .settings(
     name := "api-layer",
     libraryDependencies ++= commonLibraries ++ httpLibraries

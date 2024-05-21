@@ -1,6 +1,6 @@
 package com.github.killjoyer.modules.echo
 
-import com.github.killjoyer.services.impls.UserEventsRouterLive
+import com.github.killjoyer.services.traits.UserEventsRouter
 import zio.Scope
 import zio.UIO
 import zio.ZIO
@@ -8,7 +8,7 @@ import zio.ZLayer
 import zio.stream.Stream
 import zio.stream.ZStream
 
-final case class EchoHandler(usersRouter: UserEventsRouterLive) {
+final case class EchoHandler(usersRouter: UserEventsRouter) {
 
   val websocketEcho: UIO[Stream[Throwable, String] => Stream[Throwable, String]] =
     ZIO.succeed(_.map(_.reverse))
@@ -29,6 +29,6 @@ final case class EchoHandler(usersRouter: UserEventsRouterLive) {
 
 object EchoHandler {
 
-  val layer: ZLayer[UserEventsRouterLive, Nothing, EchoHandler] = ZLayer.fromFunction(EchoHandler.apply _)
+  val layer: ZLayer[UserEventsRouter, Nothing, EchoHandler] = ZLayer.fromFunction(EchoHandler.apply _)
 
 }

@@ -2,7 +2,7 @@ package com.github.killjoyer.repositories.impls
 
 import cats.implicits.catsSyntaxEq
 
-import com.github.killjoyer.repositories.traits.DictionaryRepository
+import com.github.killjoyer.repositories.DictionaryRepository
 import doobie.implicits._
 import doobie.util.transactor.Transactor
 import zio.&
@@ -27,8 +27,8 @@ object RuDbDictionaryRepository {
 
   val layer: ZLayer[Transactor[Task] & Random, Nothing, DictionaryRepository] =
     ZLayer.fromZIO(for {
-      tr    <- ZIO.service[Transactor[Task]]
-      rnd   <- ZIO.service[Random]
+      tr <- ZIO.service[Transactor[Task]]
+      rnd <- ZIO.service[Random]
       words <- getWords(tr).cached(30.minutes)
     } yield new RuDbDictionaryRepository(rnd, words))
 

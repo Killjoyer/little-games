@@ -1,21 +1,21 @@
 package com.github.killjoyer.services.impls
 
 import com.github.killjoyer.services.impls.UserEventsRouterLive.UserStorage
-import zio.stream.Stream
-import zio.stream.ZSink
-import zio.stream.ZStream
+import com.github.killjoyer.services.traits.UserEventsRouter
 import zio.Chunk
 import zio.Hub
 import zio.RIO
 import zio.Ref
 import zio.Scope
-import zio.Task
 import zio.UIO
 import zio.ZIO
 import zio.ZLayer
+import zio.stream.Stream
+import zio.stream.ZSink
+import zio.stream.ZStream
 
-case class UserEventsRouterLive(data: Ref.Synchronized[UserStorage]) {
-  def registerRoute(inputs: Stream[Throwable, String]): RIO[Scope, Stream[Throwable, String]] =
+case class UserEventsRouterLive(data: Ref.Synchronized[UserStorage]) extends UserEventsRouter {
+  override def registerRoute(inputs: Stream[Throwable, String]): RIO[Scope, Stream[Throwable, String]] =
     data
       .modifyZIO(users =>
         inputs.peel(ZSink.take[String](1)).flatMap {
@@ -33,7 +33,6 @@ case class UserEventsRouterLive(data: Ref.Synchronized[UserStorage]) {
               case None =>
                 Hub
                   .unbounded[String]
-                  //                  .tap(_.publish("connected")) - this is not visible in result
                   .map(hub => (hub, users.updated(username, hub)))
             }
           // user didn't introduce himself
@@ -44,7 +43,7 @@ case class UserEventsRouterLive(data: Ref.Synchronized[UserStorage]) {
       )
       .map(ZStream.fromHub(_))
 
-  def sendEvent(receiver: String, event: String): UIO[Boolean] =
+  override def sendEvent(receiver: String, event: String): UIO[Boolean] =
     data.modifyZIO(users =>
       users
         .get(receiver)
@@ -57,7 +56,7 @@ case class UserEventsRouterLive(data: Ref.Synchronized[UserStorage]) {
 object UserEventsRouterLive {
   type UserStorage = Map[String, Hub[String]]
 
-  val layer: ZLayer[Any, Nothing, UserEventsRouterLive] =
+  val layer: ZLayer[Any, Nothing, UserEventsRouter] =
     ZLayer.fromZIO(
       Ref.Synchronized.make(Map.empty[String, Hub[String]]).map(ref => UserEventsRouterLive(ref))
     )

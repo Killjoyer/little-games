@@ -1,6 +1,7 @@
 package com.github.killjoyer
 
 import cats.syntax.all._
+
 import com.github.killjoyer.infrastructure.config.ConfigLoader
 import com.github.killjoyer.infrastructure.database.TransactorProvider
 import com.github.killjoyer.infrastructure.http.RouteProvider
@@ -35,7 +36,7 @@ object Main extends ZIOAppDefault {
         ZLayer.succeed(Random.RandomLive),
         RuDbDictionaryRepository.layer,
         TransactorProvider.transactorLayer,
-        UserEventsRouterLive.layer,
+        UserEventsRouterLive.layer
       )
 
 }

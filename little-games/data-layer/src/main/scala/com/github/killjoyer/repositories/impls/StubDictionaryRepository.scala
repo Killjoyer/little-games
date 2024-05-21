@@ -1,6 +1,6 @@
 package com.github.killjoyer.repositories.impls
 
-import com.github.killjoyer.repositories.traits.DictionaryRepository
+import com.github.killjoyer.repositories.DictionaryRepository
 import zio.Task
 import zio.ULayer
 import zio.ZIO

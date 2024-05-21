@@ -1,14 +1,14 @@
 import Dependencies.*
 
-ThisBuild / scalaVersion      := "2.13.10"
-ThisBuild / organization      := "com.github.killjoyer"
+ThisBuild / scalaVersion := "2.13.10"
+ThisBuild / organization := "com.github.killjoyer"
 ThisBuild / semanticdbEnabled := true
 ThisBuild / semanticdbVersion := scalafixSemanticdb.revision
-ThisBuild / scalacOptions     := Seq("-Ywarn-unused", "-Ymacro-annotations", "-Wunused:imports")
+ThisBuild / scalacOptions := Seq("-Ywarn-unused", "-Ymacro-annotations", "-Wunused:imports")
 
 Compile / PB.targets := Seq(
-  scalapb.gen(grpc = true)          -> (Compile / sourceManaged).value / "scalapb",
-  scalapb.zio_grpc.ZioCodeGenerator -> (Compile / sourceManaged).value / "scalapb",
+  scalapb.gen(grpc = true) -> (Compile / sourceManaged).value / "scalapb",
+  scalapb.zio_grpc.ZioCodeGenerator -> (Compile / sourceManaged).value / "scalapb"
 )
 
 lazy val commonLibraries =
@@ -24,7 +24,7 @@ lazy val commonLibraries =
     circe.core,
     circe.generic,
     tofu.zioLogging,
-    tofu.logging,
+    tofu.logging
   )
 
 lazy val dbLibraries = Seq(doobie.core, doobie.postgres)
@@ -34,31 +34,27 @@ lazy val httpLibraries = Seq(tapir.core, tapir.zio, tapir.zioHttpServer, tapir.s
 lazy val domain = (project in file("little-games/domain"))
   .settings(
     name := "domain"
-//    testFrameworks += new TestFramework("zio.test.sbt.ZTestFramework"),
-  )
-
-lazy val dataAccessLayer = (project in file("little-games/data-layer"))
-  .dependsOn(domain)
-  .settings(
-    name                 := "data-layer",
-    libraryDependencies ++= commonLibraries ++ dbLibraries,
-//    testFrameworks       += new TestFramework("zio.test.sbt.ZTestFramework"),
   )
 
 lazy val serviceLayer = (project in file("little-games/service-layer"))
-  .dependsOn(domain, dataAccessLayer)
+  .dependsOn(domain)
   .settings(
-    name                 := "service-layer",
-    libraryDependencies ++= commonLibraries,
-//    testFrameworks       += new TestFramework("zio.test.sbt.ZTestFramework"),
+    name := "service-layer",
+    libraryDependencies ++= commonLibraries
+  )
+
+lazy val dataAccessLayer = (project in file("little-games/data-layer"))
+  .dependsOn(domain, serviceLayer)
+  .settings(
+    name := "data-layer",
+    libraryDependencies ++= commonLibraries ++ dbLibraries
   )
 
 lazy val apiLayer = (project in file("little-games/api-layer"))
-  .dependsOn(domain, serviceLayer)
+  .dependsOn(domain, serviceLayer, dataAccessLayer)
   .settings(
-    name                 := "api-layer",
-    libraryDependencies ++= commonLibraries ++ httpLibraries,
-//    testFrameworks       += new TestFramework("zio.test.sbt.ZTestFramework"),
+    name := "api-layer",
+    libraryDependencies ++= commonLibraries ++ httpLibraries
   )
 
 lazy val app = (project in file("little-games/main"))
@@ -74,7 +70,7 @@ lazy val app = (project in file("little-games/main"))
           grpc.runtime,
           zio.config,
           zio.configTypesafe,
-          zio.configMagnolia,
-        ),
+          zio.configMagnolia
+        )
 //    testFrameworks += new TestFramework("zio.test.sbt.ZTestFramework"),
   )

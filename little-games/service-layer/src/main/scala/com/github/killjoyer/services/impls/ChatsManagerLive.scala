@@ -24,7 +24,7 @@ case class ChatsManagerLive(userEventsRouter: UserEventsRouter, chatsRef: Ref.Sy
           .map(v => (v, chats.updated(chatId, v)))
       }
         .tap(chat => userEventsRouter.subscribeFor(username, ZStream.fromHub(chat.events)))
-        .tap(c => c.events.publish(s">>> $username joined this chat")) *>
+        .tap(_.events.publish(s">>> $username joined this chat")) *>
       ZIO.logInfo(s"User $username added to chat $chatId")
   }
 

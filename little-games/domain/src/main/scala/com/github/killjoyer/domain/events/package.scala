@@ -6,12 +6,10 @@ package object events {
     val payload: A
   }
 
-  case class Lobby(payload: LobbyPayload) extends LittleGameEvent[LobbyPayload]
+  case class LobbyEvent(payload: LobbyPayload) extends LittleGameEvent[LobbyPayload]
 
-  case class LobbyPayload()
+  case class GameEvent(payload: BullsCowsPayload) extends LittleGameEvent[BullsCowsPayload]
 
-  case class BullsCows(payload: BullsCowsPayload) extends LittleGameEvent[BullsCowsPayload]
-
-  case class BullsCowsPayload()
+  case class ChatEvent(payload: ChatPayload) extends LittleGameEvent[ChatPayload]
 
 }

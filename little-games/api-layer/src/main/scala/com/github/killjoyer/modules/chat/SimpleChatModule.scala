@@ -1,9 +1,13 @@
 package com.github.killjoyer.modules.chat
+
 import com.github.killjoyer.domain.chats.Chat.ChatId
 import com.github.killjoyer.domain.users.Username
 import com.github.killjoyer.modules.AppEndpoint
-import sttp.tapir.codec.newtype.codecForNewType
-import sttp.tapir.endpoint
+import com.github.killjoyer.modules.chat.SimpleChatHandler.ChatMessage
+import sttp.tapir.codec.newtype._
+import io.circe.generic.auto._
+import sttp.tapir.generic.auto._
+import sttp.tapir.json.circe._
 import sttp.tapir.ztapir._
 import zio.ZLayer
 
@@ -20,8 +24,9 @@ case class SimpleChatModule(handler: SimpleChatHandler) {
 
   private val sendMessage: AppEndpoint =
     baseEndpoint.post
-      .in("send" / query[ChatId]("chatId") / query[Username]("username") / query[String]("message"))
-      .zServerLogic((handler.sendMessage _).tupled)
+      .in("send")
+      .in(jsonBody[ChatMessage])
+      .zServerLogic(handler.sendMessage(_))
 
   val endpoints: List[AppEndpoint] = List(singInToChat, sendMessage)
 }

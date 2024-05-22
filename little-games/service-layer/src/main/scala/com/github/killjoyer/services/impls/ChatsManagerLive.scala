@@ -13,7 +13,7 @@ import zio.stream._
 case class ChatsManagerLive(userEventsRouter: UserEventsRouter, chatsRef: Ref.Synchronized[Map[ChatId, Chat]])
     extends ChatsManager {
 
-  override def registerToChat(username: Username, chatId: ChatId): Task[Unit] = {
+  override def registerToChat(username: Username, chatId: ChatId): Task[Unit] =
     ZIO.logInfo(s"User $username wants to join chat $chatId") *>
       chatsRef.modifyZIO { chats =>
         chats
@@ -26,7 +26,6 @@ case class ChatsManagerLive(userEventsRouter: UserEventsRouter, chatsRef: Ref.Sy
         .tap(chat => userEventsRouter.subscribeFor(username, ZStream.fromHub(chat.events)))
         .tap(_.events.publish(s">>> $username joined this chat")) *>
       ZIO.logInfo(s"User $username added to chat $chatId")
-  }
 
   override def sendMessageToChat(
       username: Username,

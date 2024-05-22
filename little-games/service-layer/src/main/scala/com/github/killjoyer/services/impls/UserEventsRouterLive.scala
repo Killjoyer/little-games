@@ -60,7 +60,7 @@ case class UserEventsRouterLive(data: Ref.Synchronized[UserStorage]) extends Use
   ): Task[Unit] =
     data.updateZIO(users =>
       (users.get(user) match {
-        case Some(hub) => events.foreach(hub.publish _).forkDaemon.unit
+        case Some(hub) => events.foreach(hub.publish).forkDaemon.unit
         case None      => ZIO.fail(new RuntimeException("No such user"))
       }).as(users)
     )

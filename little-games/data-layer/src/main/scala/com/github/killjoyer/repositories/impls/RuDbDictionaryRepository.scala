@@ -27,8 +27,8 @@ object RuDbDictionaryRepository {
 
   val layer: ZLayer[Transactor[Task] & Random, Nothing, DictionaryRepository] =
     ZLayer.fromZIO(for {
-      tr <- ZIO.service[Transactor[Task]]
-      rnd <- ZIO.service[Random]
+      tr    <- ZIO.service[Transactor[Task]]
+      rnd   <- ZIO.service[Random]
       words <- getWords(tr).cached(30.minutes)
     } yield new RuDbDictionaryRepository(rnd, words))
 

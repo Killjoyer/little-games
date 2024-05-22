@@ -8,10 +8,13 @@ import com.github.killjoyer.infrastructure.http.RouteProvider
 import com.github.killjoyer.infrastructure.http.ZioHttpServer
 import com.github.killjoyer.modules.bullsandcows.BullsAndCowsHandler
 import com.github.killjoyer.modules.bullsandcows.BullsAndCowsModule
+import com.github.killjoyer.modules.chat.SimpleChatHandler
+import com.github.killjoyer.modules.chat.SimpleChatModule
 import com.github.killjoyer.modules.echo.EchoHandler
 import com.github.killjoyer.modules.echo.EchoModule
 import com.github.killjoyer.repositories.impls.RuDbDictionaryRepository
 import com.github.killjoyer.services.impls.BullsAndCowsServiceLive
+import com.github.killjoyer.services.impls.ChatsManagerLive
 import com.github.killjoyer.services.impls.UserEventsRouterLive
 import tofu.logging.zlogs._
 import zio._
@@ -36,7 +39,9 @@ object Main extends ZIOAppDefault {
         ZLayer.succeed(Random.RandomLive),
         RuDbDictionaryRepository.layer,
         TransactorProvider.transactorLayer,
-        UserEventsRouterLive.layer
+        UserEventsRouterLive.layer,
+        SimpleChatModule.layer,
+        SimpleChatHandler.layer,
+        ChatsManagerLive.layer,
       )
-
 }

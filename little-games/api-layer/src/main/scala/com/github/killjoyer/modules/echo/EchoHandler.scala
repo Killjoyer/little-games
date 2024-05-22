@@ -1,5 +1,6 @@
 package com.github.killjoyer.modules.echo
 
+import com.github.killjoyer.domain.users.Username
 import com.github.killjoyer.services.traits.UserEventsRouter
 import zio.Scope
 import zio.UIO
@@ -23,7 +24,7 @@ final case class EchoHandler(usersRouter: UserEventsRouter) {
 
   def echo(input: String): ZIO[Any, Nothing, String] = ZIO.succeed(input.reverse)
 
-  def publish(receiver: String, event: String): ZIO[Any, Nothing, String] =
+  def publish(receiver: Username, event: String): ZIO[Any, Nothing, String] =
     usersRouter.sendEvent(receiver, event).map(if (_) "sent" else "not sent")
 }
 

@@ -18,7 +18,7 @@ import zio.ZLayer
 final case class BullsAndCowsHandler(
     service: BullsAndCowsService,
     random: Random,
-    gamesRef: Ref.Synchronized[Map[UUID, BullsAndCowsState]]
+    gamesRef: Ref.Synchronized[Map[UUID, BullsAndCowsState]],
 ) {
 
   def bullsAndCows(guess: String, gameId: UUID): IO[ServerError, BullsAndCowsResponse] =
@@ -35,8 +35,8 @@ final case class BullsAndCowsHandler(
               result =>
                 (
                   BullsAndCowsResponse(gameId, result, state.history),
-                  games.updated(gameId, state.copy(history = result :: state.history))
-                )
+                  games.updated(gameId, state.copy(history = result :: state.history)),
+                ),
             )
         }
     }
@@ -49,7 +49,7 @@ final case class BullsAndCowsHandler(
           uuid <- random.nextUUID
         } yield (
           BullsAndCowsStartGameResponse(uuid),
-          games.updated(uuid, BullsAndCowsState(word, request.allowDuplicates, List()))
+          games.updated(uuid, BullsAndCowsState(word, request.allowDuplicates, List())),
         )
       )
       .mapError(th => ServerError("INTERNAL_ERROR", th.getMessage))
@@ -62,9 +62,9 @@ object BullsAndCowsHandler {
 
   val layer: ZLayer[Random with BullsAndCowsService, Nothing, BullsAndCowsHandler] =
     ZLayer.fromZIO(for {
-      srv <- ZIO.service[BullsAndCowsService]
+      srv    <- ZIO.service[BullsAndCowsService]
       random <- ZIO.service[Random]
-      ref <- Ref.Synchronized.make(Map.empty[UUID, BullsAndCowsState])
+      ref    <- Ref.Synchronized.make(Map.empty[UUID, BullsAndCowsState])
     } yield BullsAndCowsHandler(srv, random, ref))
 
 }

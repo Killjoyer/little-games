@@ -34,7 +34,7 @@ final case class BullsAndCowsServiceLive(wordsRepo: DictionaryRepository) extend
 
     ZIO.ifZIO(isWordValid(guess, allowDuplicates, answer.length))(
       ZIO.succeed(BullsAndCowsResult(guess, bulls, cows)),
-      ZIO.fail(new RuntimeException("invalid word")) // todo
+      ZIO.fail(new RuntimeException("invalid word")), // todo
     )
   }
 

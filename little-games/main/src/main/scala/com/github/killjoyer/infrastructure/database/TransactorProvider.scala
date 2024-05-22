@@ -13,12 +13,12 @@ object TransactorProvider {
     ZLayer.fromZIO(for {
       config <- ZIO.service[DatabaseConfig]
       tr = Transactor.fromDriverManager[Task](
-        driver = "org.postgresql.Driver",
-        url = config.url,
-        user = config.user,
-        password = config.password,
-        logHandler = None
-      )
+             driver = "org.postgresql.Driver",
+             url = config.url,
+             user = config.user,
+             password = config.password,
+             logHandler = None,
+           )
     } yield tr)
 
 }

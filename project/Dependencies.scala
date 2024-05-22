@@ -25,6 +25,7 @@ object Dependencies {
     lazy val zioHttpServer = "com.softwaremill.sttp.tapir" %% "tapir-zio-http-server"   % version
     lazy val swagger       = "com.softwaremill.sttp.tapir" %% "tapir-swagger-ui-bundle" % version
     lazy val circe         = "com.softwaremill.sttp.tapir" %% "tapir-json-circe"        % version
+    lazy val newtype       = "com.softwaremill.sttp.tapir" %% "tapir-newtype"           % version
   }
 
   object circe {
@@ -55,4 +56,8 @@ object doobie {
   lazy val version  = "1.0.0-RC4"
   lazy val core     = "org.tpolecat" %% "doobie-core"     % version
   lazy val postgres = "org.tpolecat" %% "doobie-postgres" % version
+}
+
+object utils {
+  lazy val newtype = "io.estatico" %% "newtype" % "0.4.4"
 }

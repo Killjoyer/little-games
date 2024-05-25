@@ -7,7 +7,7 @@ import com.github.killjoyer.modules.bullsandcows.BullsAndCowsModule.BullsAndCows
 import com.github.killjoyer.modules.bullsandcows.BullsAndCowsModule.BullsAndCowsStartGameRequest
 import com.github.killjoyer.modules.bullsandcows.BullsAndCowsModule.BullsAndCowsStartGameResponse
 import com.github.killjoyer.modules.bullsandcows.BullsAndCowsModule.ServerError
-import com.github.killjoyer.services.traits.BullsAndCowsService.BullsAndCowsResult
+import com.github.killjoyer.services.domain.traits.BullsAndCowsService.BullsAndCowsResult
 import io.circe.generic.JsonCodec
 import io.circe.generic.auto._
 import sttp.tapir.generic.auto._

@@ -3,8 +3,8 @@ package com.github.killjoyer.services.domain.impls
 import cats.implicits.catsSyntaxEq
 
 import com.github.killjoyer.repositories.DictionaryRepository
-import com.github.killjoyer.services.traits.BullsAndCowsService
-import com.github.killjoyer.services.traits.BullsAndCowsService.BullsAndCowsResult
+import com.github.killjoyer.services.domain.traits.BullsAndCowsService
+import com.github.killjoyer.services.domain.traits.BullsAndCowsService.BullsAndCowsResult
 import zio.Task
 import zio.ZIO
 import zio.ZLayer

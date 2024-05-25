@@ -1,6 +1,6 @@
-package com.github.killjoyer.services.traits
+package com.github.killjoyer.services.domain.traits
 
-import com.github.killjoyer.services.traits.BullsAndCowsService.BullsAndCowsResult
+import com.github.killjoyer.services.domain.traits.BullsAndCowsService.BullsAndCowsResult
 import io.circe.generic.JsonCodec
 import zio.Task
 

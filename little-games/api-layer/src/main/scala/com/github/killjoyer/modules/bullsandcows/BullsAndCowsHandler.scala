@@ -7,8 +7,8 @@ import com.github.killjoyer.modules.bullsandcows.BullsAndCowsModule.BullsAndCows
 import com.github.killjoyer.modules.bullsandcows.BullsAndCowsModule.BullsAndCowsStartGameRequest
 import com.github.killjoyer.modules.bullsandcows.BullsAndCowsModule.BullsAndCowsStartGameResponse
 import com.github.killjoyer.modules.bullsandcows.BullsAndCowsModule.ServerError
-import com.github.killjoyer.services.traits.BullsAndCowsService
-import com.github.killjoyer.services.traits.BullsAndCowsService.BullsAndCowsResult
+import com.github.killjoyer.services.domain.traits.BullsAndCowsService
+import com.github.killjoyer.services.domain.traits.BullsAndCowsService.BullsAndCowsResult
 import zio.IO
 import zio.Random
 import zio.Ref

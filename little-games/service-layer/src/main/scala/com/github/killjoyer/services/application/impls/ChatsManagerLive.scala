@@ -1,4 +1,4 @@
-package com.github.killjoyer.services.impls
+package com.github.killjoyer.services.application.impls
 
 import com.github.killjoyer.domain.chats.Chat
 import com.github.killjoyer.domain.chats.Chat.ChatId
@@ -6,10 +6,10 @@ import com.github.killjoyer.domain.events.ChatPayload.SendMessage
 import com.github.killjoyer.domain.events.ChatPayload.UserJoined
 import com.github.killjoyer.domain.events.LittleGamesEvent.ChatEvent
 import com.github.killjoyer.domain.users.Username
+import com.github.killjoyer.services.application.impls.ChatsManagerLive.ChatDoesntExist
+import com.github.killjoyer.services.application.impls.ChatsManagerLive.UserDoesNotBelongToChat
 import com.github.killjoyer.services.application.traits.ChatsManager
 import com.github.killjoyer.services.application.traits.UserEventsRouter
-import com.github.killjoyer.services.impls.ChatsManagerLive.ChatDoesntExist
-import com.github.killjoyer.services.impls.ChatsManagerLive.UserDoesNotBelongToChat
 import zio._
 import zio.stream._
 

@@ -1,9 +1,9 @@
-package com.github.killjoyer.services.impls
+package com.github.killjoyer.services.application.impls
 
 import com.github.killjoyer.domain.events.LittleGamesEvent
 import com.github.killjoyer.domain.users.Username
+import com.github.killjoyer.services.application.impls.UserEventsRouterLive.UserStorage
 import com.github.killjoyer.services.application.traits.UserEventsRouter
-import com.github.killjoyer.services.impls.UserEventsRouterLive.UserStorage
 import zio.Chunk
 import zio.Hub
 import zio.RIO

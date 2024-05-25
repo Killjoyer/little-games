@@ -1,4 +1,4 @@
-package com.github.killjoyer.services.traits
+package com.github.killjoyer.services.application.traits
 
 import com.github.killjoyer.domain.events.LittleGamesEvent
 import com.github.killjoyer.domain.users.Username

@@ -1,4 +1,4 @@
-package com.github.killjoyer.services.impls
+package com.github.killjoyer.services.domain.impls
 
 import cats.implicits.catsSyntaxEq
 

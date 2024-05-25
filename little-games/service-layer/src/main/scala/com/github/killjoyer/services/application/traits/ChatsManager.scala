@@ -1,4 +1,5 @@
-package com.github.killjoyer.services.traits
+package com.github.killjoyer.services.application.traits
+
 import com.github.killjoyer.domain.chats.Chat.ChatId
 import com.github.killjoyer.domain.users.Username
 import zio.Task

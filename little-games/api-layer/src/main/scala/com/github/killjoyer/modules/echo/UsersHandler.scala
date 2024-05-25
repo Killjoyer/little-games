@@ -1,7 +1,7 @@
 package com.github.killjoyer.modules.echo
 
 import com.github.killjoyer.infrastructure.utils.newtype._
-import com.github.killjoyer.services.traits.UserEventsRouter
+import com.github.killjoyer.services.application.traits.UserEventsRouter
 import io.circe.Json
 import io.circe.generic.extras.Configuration
 import io.circe.generic.extras.auto._

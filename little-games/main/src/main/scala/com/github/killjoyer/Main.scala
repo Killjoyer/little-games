@@ -13,7 +13,7 @@ import com.github.killjoyer.modules.chat.SimpleChatModule
 import com.github.killjoyer.modules.echo.UsersHandler
 import com.github.killjoyer.modules.echo.UsersModule
 import com.github.killjoyer.repositories.impls.RuDbDictionaryRepository
-import com.github.killjoyer.services.impls.BullsAndCowsServiceLive
+import com.github.killjoyer.services.domain.impls.BullsAndCowsServiceLive
 import com.github.killjoyer.services.impls.ChatsManagerLive
 import com.github.killjoyer.services.impls.UserEventsRouterLive
 import tofu.logging.zlogs._

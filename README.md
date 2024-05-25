@@ -42,13 +42,20 @@ Module `main` is just convenient entry point - everything is interconnected and 
 ### Module dependencies graph
 
 ```mermaid
-graph TD;
-    main-->api-layer;
-    main-->data-layer;
-    api-layer-->service-layer;
-    main-->service-layer;
-    api-layer-->domain;
-    service-layer-->domain;
-    data-layer-->service-layer;
-    data-layer-->domain;
+flowchart TD
+    subgraph service-layer
+        direction TB
+        service-layer-application --> service-layer-domain
+    end
+    main --> api-layer
+    main --> data-layer
+    api-layer --> service-layer
+    main --> service-layer
+    api-layer --> domain
+    service-layer --> domain
+    data-layer --> service-layer
+    data-layer --> domain
 ```
+
+* data-layer depends on service layer, because repositories' interfaces are in service layer. Not the other way round,
+  because it is strange for service-layer to have transitive dependency on postgresql. 

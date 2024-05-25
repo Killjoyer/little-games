@@ -44,7 +44,6 @@ lazy val serviceLayer = (project in file("little-games/service-layer"))
   .settings(
     name                 := "service-layer",
     libraryDependencies ++= commonLibraries,
-    addCompilerPlugin("org.typelevel" % "kind-projector" % "0.13.2" cross CrossVersion.full),
   )
 
 lazy val dataAccessLayer = (project in file("little-games/data-layer"))
@@ -52,7 +51,6 @@ lazy val dataAccessLayer = (project in file("little-games/data-layer"))
   .settings(
     name                 := "data-layer",
     libraryDependencies ++= commonLibraries ++ dbLibraries,
-    addCompilerPlugin("org.typelevel" % "kind-projector" % "0.13.2" cross CrossVersion.full),
   )
 
 lazy val apiLayer = (project in file("little-games/api-layer"))
@@ -60,7 +58,6 @@ lazy val apiLayer = (project in file("little-games/api-layer"))
   .settings(
     name                 := "api-layer",
     libraryDependencies ++= commonLibraries ++ httpLibraries,
-    addCompilerPlugin("org.typelevel" % "kind-projector" % "0.13.2" cross CrossVersion.full),
   )
 
 lazy val app = (project in file("little-games/main"))
@@ -78,6 +75,5 @@ lazy val app = (project in file("little-games/main"))
           zio.configTypesafe,
           zio.configMagnolia,
         ),
-    addCompilerPlugin("org.typelevel" % "kind-projector" % "0.13.2" cross CrossVersion.full),
 //    testFrameworks += new TestFramework("zio.test.sbt.ZTestFramework"),
   )

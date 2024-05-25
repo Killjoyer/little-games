@@ -1,7 +1,7 @@
 package com.github.killjoyer.services.application.impls
 
 import com.github.killjoyer.domain.events.LittleGamesEvent
-import com.github.killjoyer.domain.users.Username
+import com.github.killjoyer.domain.users.UserId
 import com.github.killjoyer.services.application.impls.UserEventsRouterLive.UserStorage
 import com.github.killjoyer.services.application.traits.UserEventsRouter
 import zio.Chunk
@@ -24,7 +24,7 @@ case class UserEventsRouterLive(data: Ref.Synchronized[UserStorage]) extends Use
         inputs.peel(ZSink.take[String](1)).flatMap {
           // we dont care about user input, we use rest for this
           case (Chunk(user), _) =>
-            val username = Username(user)
+            val username = UserId(user)
             users.get(username) match {
               // reconnect
               case Some(hub) =>
@@ -46,7 +46,7 @@ case class UserEventsRouterLive(data: Ref.Synchronized[UserStorage]) extends Use
       )
       .map(ZStream.fromHub(_))
 
-  override def sendEvent(receiver: Username, event: LittleGamesEvent): UIO[Boolean] =
+  override def sendEvent(receiver: UserId, event: LittleGamesEvent): UIO[Boolean] =
     data.modifyZIO(users =>
       users
         .get(receiver)
@@ -55,8 +55,8 @@ case class UserEventsRouterLive(data: Ref.Synchronized[UserStorage]) extends Use
     )
 
   override def subscribeFor(
-      user: Username,
-      events: Stream[Throwable, LittleGamesEvent],
+                             user: UserId,
+                             events: Stream[Throwable, LittleGamesEvent],
   ): Task[Unit] =
     data.updateZIO(users =>
       (users.get(user) match {
@@ -67,10 +67,10 @@ case class UserEventsRouterLive(data: Ref.Synchronized[UserStorage]) extends Use
 }
 
 object UserEventsRouterLive {
-  type UserStorage = Map[Username, Hub[LittleGamesEvent]]
+  type UserStorage = Map[UserId, Hub[LittleGamesEvent]]
 
   val layer: ZLayer[Any, Nothing, UserEventsRouter] =
     ZLayer.fromZIO(
-      Ref.Synchronized.make(Map.empty[Username, Hub[LittleGamesEvent]]).map(ref => UserEventsRouterLive(ref))
+      Ref.Synchronized.make(Map.empty[UserId, Hub[LittleGamesEvent]]).map(ref => UserEventsRouterLive(ref))
     )
 }

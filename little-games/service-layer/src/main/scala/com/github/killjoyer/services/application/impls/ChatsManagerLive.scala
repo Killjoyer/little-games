@@ -5,7 +5,7 @@ import com.github.killjoyer.domain.chats.Chat.ChatId
 import com.github.killjoyer.domain.events.ChatPayload.SendMessage
 import com.github.killjoyer.domain.events.ChatPayload.UserJoined
 import com.github.killjoyer.domain.events.LittleGamesEvent.ChatEvent
-import com.github.killjoyer.domain.users.Username
+import com.github.killjoyer.domain.users.UserId
 import com.github.killjoyer.services.application.impls.ChatsManagerLive.ChatDoesntExist
 import com.github.killjoyer.services.application.impls.ChatsManagerLive.UserDoesNotBelongToChat
 import com.github.killjoyer.services.application.traits.ChatsManager
@@ -16,7 +16,7 @@ import zio.stream._
 case class ChatsManagerLive(userEventsRouter: UserEventsRouter, chatsRef: Ref.Synchronized[Map[ChatId, Chat]])
     extends ChatsManager {
 
-  override def registerToChat(username: Username, chatId: ChatId): Task[Unit] =
+  override def registerToChat(username: UserId, chatId: ChatId): Task[Unit] =
     ZIO.logInfo(s"User $username wants to join chat $chatId") *>
       chatsRef.modifyZIO { chats =>
         chats
@@ -31,9 +31,9 @@ case class ChatsManagerLive(userEventsRouter: UserEventsRouter, chatsRef: Ref.Sy
       ZIO.logInfo(s"User $username added to chat $chatId")
 
   override def sendMessageToChat(
-      username: Username,
-      chatId: ChatId,
-      message: String,
+                                  username: UserId,
+                                  chatId: ChatId,
+                                  message: String,
   ): Task[Unit] =
     chatsRef.get
       .flatMap(chats =>
@@ -59,6 +59,6 @@ object ChatsManagerLive {
 
   case class ChatDoesntExist(chatId: ChatId) extends ChatError
 
-  case class UserDoesNotBelongToChat(chatId: ChatId, username: Username) extends ChatError
+  case class UserDoesNotBelongToChat(chatId: ChatId, username: UserId) extends ChatError
 
 }

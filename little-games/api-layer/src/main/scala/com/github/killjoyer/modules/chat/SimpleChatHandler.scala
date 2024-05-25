@@ -1,6 +1,6 @@
 package com.github.killjoyer.modules.chat
 import com.github.killjoyer.domain.chats.Chat.ChatId
-import com.github.killjoyer.domain.users.Username
+import com.github.killjoyer.domain.users.UserId
 import com.github.killjoyer.infrastructure.utils.newtype._
 import com.github.killjoyer.modules.chat.SimpleChatHandler.ChatMessage
 import com.github.killjoyer.services.application.traits.ChatsManager
@@ -9,7 +9,7 @@ import zio.UIO
 import zio.ZLayer
 
 case class SimpleChatHandler(chatsManager: ChatsManager) {
-  def registerToChat(chatId: ChatId, username: Username): UIO[Unit] =
+  def registerToChat(chatId: ChatId, username: UserId): UIO[Unit] =
     chatsManager.registerToChat(username, chatId).ignore // todo catch errors
 
   def sendMessage(chatMessage: ChatMessage): UIO[Unit] =
@@ -18,7 +18,7 @@ case class SimpleChatHandler(chatsManager: ChatsManager) {
 
 object SimpleChatHandler {
   @JsonCodec
-  case class ChatMessage(message: String, username: Username, chatId: ChatId)
+  case class ChatMessage(message: String, username: UserId, chatId: ChatId)
 
   val layer: ZLayer[ChatsManager, Nothing, SimpleChatHandler] = ZLayer.fromFunction(SimpleChatHandler.apply _)
 }

@@ -1,7 +1,7 @@
 package com.github.killjoyer.modules.chat
 
 import com.github.killjoyer.domain.chats.Chat.ChatId
-import com.github.killjoyer.domain.users.Username
+import com.github.killjoyer.domain.users.UserId
 import com.github.killjoyer.modules.AppEndpoint
 import com.github.killjoyer.modules.chat.SimpleChatHandler.ChatMessage
 import io.circe.generic.auto._
@@ -19,7 +19,7 @@ case class SimpleChatModule(handler: SimpleChatHandler) {
 
   private val singInToChat: AppEndpoint =
     baseEndpoint.post
-      .in("sign-in" / query[ChatId]("chatId") / query[Username]("username"))
+      .in("sign-in" / query[ChatId]("chatId") / query[UserId]("username"))
       .zServerLogic((handler.registerToChat _).tupled)
 
   private val sendMessage: AppEndpoint =

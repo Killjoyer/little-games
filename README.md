@@ -49,5 +49,6 @@ graph TD;
     main-->service-layer;
     api-layer-->domain;
     service-layer-->domain;
+    data-layer-->service-layer;
     data-layer-->domain;
 ```

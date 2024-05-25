@@ -4,6 +4,8 @@ object Dependencies {
   object zio {
     lazy val version     = "2.1.0"
     lazy val core        = "dev.zio" %% "zio"              % version
+    lazy val stream      = "dev.zio" %% "zio-streams"      % version
+    lazy val concurrent  = "dev.zio" %% "zio-concurrent"   % version
     lazy val test        = "dev.zio" %% "zio-test"         % version      % Test
     lazy val testSbt     = "dev.zio" %% "zio-test-sbt"     % version      % Test
     lazy val mock        = "dev.zio" %% "zio-mock"         % "1.0.0-RC12" % Test
@@ -23,13 +25,15 @@ object Dependencies {
     lazy val zioHttpServer = "com.softwaremill.sttp.tapir" %% "tapir-zio-http-server"   % version
     lazy val swagger       = "com.softwaremill.sttp.tapir" %% "tapir-swagger-ui-bundle" % version
     lazy val circe         = "com.softwaremill.sttp.tapir" %% "tapir-json-circe"        % version
+    lazy val newtype       = "com.softwaremill.sttp.tapir" %% "tapir-newtype"           % version
   }
 
   object circe {
     lazy val version = "0.14.7"
-    lazy val core    = "io.circe" %% "circe-core"    % version
-    lazy val generic = "io.circe" %% "circe-generic" % version
-    lazy val parser  = "io.circe" %% "circe-parser"  % version
+    lazy val core    = "io.circe" %% "circe-core"           % version
+    lazy val generic = "io.circe" %% "circe-generic"        % version
+    lazy val parser  = "io.circe" %% "circe-parser"         % version
+    lazy val extras  = "io.circe" %% "circe-generic-extras" % "0.14.3"
   }
 
   object tofu {
@@ -53,4 +57,8 @@ object doobie {
   lazy val version  = "1.0.0-RC4"
   lazy val core     = "org.tpolecat" %% "doobie-core"     % version
   lazy val postgres = "org.tpolecat" %% "doobie-postgres" % version
+}
+
+object utils {
+  lazy val newtype = "io.estatico" %% "newtype" % "0.4.4"
 }

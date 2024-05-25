@@ -14,6 +14,8 @@ Compile / PB.targets := Seq(
 lazy val commonLibraries =
   Seq(
     zio.core,
+    zio.stream,
+    zio.concurrent,
     zio.test,
     zio.testSbt,
     zio.mock,
@@ -21,34 +23,34 @@ lazy val commonLibraries =
     cats.core,
     circe.core,
     circe.generic,
+    circe.extras,
     tofu.zioLogging,
     tofu.logging,
+    utils.newtype,
   )
 
 lazy val dbLibraries = Seq(doobie.core, doobie.postgres)
 
-lazy val httpLibraries = Seq(tapir.core, tapir.zio, tapir.zioHttpServer, tapir.swagger, tapir.circe)
+lazy val httpLibraries = Seq(tapir.core, tapir.zio, tapir.zioHttpServer, tapir.swagger, tapir.circe, tapir.newtype)
 
 lazy val domain = (project in file("little-games/domain"))
   .settings(
-    name := "domain"
-//    testFrameworks += new TestFramework("zio.test.sbt.ZTestFramework"),
-  )
-
-lazy val dataAccessLayer = (project in file("little-games/data-layer"))
-  .dependsOn(domain)
-  .settings(
-    name                 := "data-layer",
-    libraryDependencies ++= commonLibraries ++ dbLibraries,
-//    testFrameworks       += new TestFramework("zio.test.sbt.ZTestFramework"),
+    name                 := "domain",
+    libraryDependencies ++= commonLibraries,
   )
 
 lazy val serviceLayer = (project in file("little-games/service-layer"))
-  .dependsOn(domain, dataAccessLayer)
+  .dependsOn(domain)
   .settings(
     name                 := "service-layer",
     libraryDependencies ++= commonLibraries,
-//    testFrameworks       += new TestFramework("zio.test.sbt.ZTestFramework"),
+  )
+
+lazy val dataAccessLayer = (project in file("little-games/data-layer"))
+  .dependsOn(domain, serviceLayer)
+  .settings(
+    name                 := "data-layer",
+    libraryDependencies ++= commonLibraries ++ dbLibraries,
   )
 
 lazy val apiLayer = (project in file("little-games/api-layer"))
@@ -56,7 +58,6 @@ lazy val apiLayer = (project in file("little-games/api-layer"))
   .settings(
     name                 := "api-layer",
     libraryDependencies ++= commonLibraries ++ httpLibraries,
-//    testFrameworks       += new TestFramework("zio.test.sbt.ZTestFramework"),
   )
 
 lazy val app = (project in file("little-games/main"))

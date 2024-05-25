@@ -2,11 +2,12 @@ package com.github.killjoyer.modules.bullsandcows
 
 import java.util.UUID
 
+import com.github.killjoyer.modules.AppEndpoint
 import com.github.killjoyer.modules.bullsandcows.BullsAndCowsModule.BullsAndCowsResponse
 import com.github.killjoyer.modules.bullsandcows.BullsAndCowsModule.BullsAndCowsStartGameRequest
 import com.github.killjoyer.modules.bullsandcows.BullsAndCowsModule.BullsAndCowsStartGameResponse
 import com.github.killjoyer.modules.bullsandcows.BullsAndCowsModule.ServerError
-import com.github.killjoyer.services.traits.BullsAndCowsService.BullsAndCowsResult
+import com.github.killjoyer.services.domain.traits.BullsAndCowsService.BullsAndCowsResult
 import io.circe.generic.JsonCodec
 import io.circe.generic.auto._
 import sttp.tapir.generic.auto._
@@ -21,20 +22,20 @@ final case class BullsAndCowsModule(handler: BullsAndCowsHandler) {
     .tag("Bulls and Cows")
     .errorOut(jsonBody[ServerError])
 
-  private val startGame: ZServerEndpoint[Any, Any] =
+  private val startGame: AppEndpoint =
     bcEndpoint.post
       .in("start")
       .in(jsonBody[BullsAndCowsStartGameRequest])
       .out(jsonBody[BullsAndCowsStartGameResponse])
       .zServerLogic(handler.bullsAndCowsStartGame)
 
-  private val bullsAndCows: ZServerEndpoint[Any, Any] =
+  private val bullsAndCows: AppEndpoint =
     bcEndpoint.post
       .in(query[String]("guess") / query[UUID]("gameId"))
       .out(jsonBody[BullsAndCowsResponse])
       .zServerLogic { case (guess, gameId) => handler.bullsAndCows(guess, gameId) }
 
-  val endpoints: List[ZServerEndpoint[Any, Any]] = List(startGame, bullsAndCows)
+  val endpoints: List[AppEndpoint] = List(startGame, bullsAndCows)
 
 }
 

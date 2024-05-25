@@ -1,4 +1,4 @@
-package com.github.killjoyer.repositories.traits
+package com.github.killjoyer.repositories
 
 import zio.Task
 

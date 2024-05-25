@@ -8,10 +8,14 @@ import com.github.killjoyer.infrastructure.http.RouteProvider
 import com.github.killjoyer.infrastructure.http.ZioHttpServer
 import com.github.killjoyer.modules.bullsandcows.BullsAndCowsHandler
 import com.github.killjoyer.modules.bullsandcows.BullsAndCowsModule
-import com.github.killjoyer.modules.echo.EchoHandler
-import com.github.killjoyer.modules.echo.EchoModule
+import com.github.killjoyer.modules.chat.SimpleChatHandler
+import com.github.killjoyer.modules.chat.SimpleChatModule
+import com.github.killjoyer.modules.echo.UsersHandler
+import com.github.killjoyer.modules.echo.UsersModule
 import com.github.killjoyer.repositories.impls.RuDbDictionaryRepository
-import com.github.killjoyer.services.impls.BullsAndCowsServiceLive
+import com.github.killjoyer.services.application.impls.ChatsManagerLive
+import com.github.killjoyer.services.application.impls.UserEventsRouterLive
+import com.github.killjoyer.services.domain.impls.BullsAndCowsServiceLive
 import tofu.logging.zlogs._
 import zio._
 
@@ -27,14 +31,17 @@ object Main extends ZIOAppDefault {
         ConfigLoader.load(),
         ZioHttpServer.layer,
         RouteProvider.layer,
-        EchoModule.layer,
-        EchoHandler.layer,
+        UsersModule.layer,
+        UsersHandler.layer,
         BullsAndCowsServiceLive.layer,
         BullsAndCowsModule.layer,
         BullsAndCowsHandler.layer,
         ZLayer.succeed(Random.RandomLive),
         RuDbDictionaryRepository.layer,
         TransactorProvider.transactorLayer,
+        UserEventsRouterLive.layer,
+        SimpleChatModule.layer,
+        SimpleChatHandler.layer,
+        ChatsManagerLive.layer,
       )
-
 }

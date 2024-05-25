@@ -1,10 +1,10 @@
-package com.github.killjoyer.services.impls
+package com.github.killjoyer.services.domain.impls
 
 import cats.implicits.catsSyntaxEq
 
-import com.github.killjoyer.repositories.traits.DictionaryRepository
-import com.github.killjoyer.services.traits.BullsAndCowsService
-import com.github.killjoyer.services.traits.BullsAndCowsService.BullsAndCowsResult
+import com.github.killjoyer.repositories.DictionaryRepository
+import com.github.killjoyer.services.domain.traits.BullsAndCowsService
+import com.github.killjoyer.services.domain.traits.BullsAndCowsService.BullsAndCowsResult
 import zio.Task
 import zio.ZIO
 import zio.ZLayer
@@ -13,7 +13,7 @@ final case class BullsAndCowsServiceLive(wordsRepo: DictionaryRepository) extend
 
   private def isWordValid(guess: String, allowDuplicates: Boolean, wordLength: Int): Task[Boolean] =
     ZIO.succeed(
-      guess.length === wordLength && (allowDuplicates || guess.toSet.size === wordLength) // todo change
+      guess.length === wordLength && (allowDuplicates || guess.toSet.size === wordLength) // todo
     )
 
   private def dropAt(s: String)(i: Int): String = s.take(i) + s.drop(i + 1)

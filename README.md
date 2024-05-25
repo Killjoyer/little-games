@@ -39,7 +39,7 @@ etc.
 
 Module `main` is just convenient entry point - everything is interconnected and built there.
 
-### Module dependencies graph
+### Module dependency graph
 
 ```mermaid
 flowchart TD

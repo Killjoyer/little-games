@@ -30,9 +30,10 @@ object Dependencies {
 
   object circe {
     lazy val version = "0.14.7"
-    lazy val core    = "io.circe" %% "circe-core"    % version
-    lazy val generic = "io.circe" %% "circe-generic" % version
-    lazy val parser  = "io.circe" %% "circe-parser"  % version
+    lazy val core    = "io.circe" %% "circe-core"           % version
+    lazy val generic = "io.circe" %% "circe-generic"        % version
+    lazy val parser  = "io.circe" %% "circe-parser"         % version
+    lazy val extras  = "io.circe" %% "circe-generic-extras" % "0.14.3"
   }
 
   object tofu {

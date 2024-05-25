@@ -1,5 +1,6 @@
 package com.github.killjoyer.services.impls
 
+import com.github.killjoyer.domain.events.LittleGamesEvent
 import com.github.killjoyer.domain.users.Username
 import com.github.killjoyer.services.impls.UserEventsRouterLive.UserStorage
 import com.github.killjoyer.services.traits.UserEventsRouter
@@ -17,7 +18,7 @@ import zio.stream.ZSink
 import zio.stream.ZStream
 
 case class UserEventsRouterLive(data: Ref.Synchronized[UserStorage]) extends UserEventsRouter {
-  override def registerRoute(inputs: Stream[Throwable, String]): RIO[Scope, Stream[Throwable, String]] =
+  override def registerRoute(inputs: Stream[Throwable, String]): RIO[Scope, Stream[Throwable, LittleGamesEvent]] =
     data
       .modifyZIO(users =>
         inputs.peel(ZSink.take[String](1)).flatMap {
@@ -27,15 +28,14 @@ case class UserEventsRouterLive(data: Ref.Synchronized[UserStorage]) extends Use
             users.get(username) match {
               // reconnect
               case Some(hub) =>
-                hub.publish("disconnecting...") *>
-                  hub.shutdown *>
+                hub.shutdown *>
                   Hub
-                    .unbounded[String]
+                    .unbounded[LittleGamesEvent]
                     .map(hub => (hub, users.updated(username, hub)))
               // newly connected user
               case None =>
                 Hub
-                  .unbounded[String]
+                  .unbounded[LittleGamesEvent]
                   .map(hub => (hub, users.updated(username, hub)))
             }
           // user didn't introduce himself
@@ -46,7 +46,7 @@ case class UserEventsRouterLive(data: Ref.Synchronized[UserStorage]) extends Use
       )
       .map(ZStream.fromHub(_))
 
-  override def sendEvent(receiver: Username, event: String): UIO[Boolean] =
+  override def sendEvent(receiver: Username, event: LittleGamesEvent): UIO[Boolean] =
     data.modifyZIO(users =>
       users
         .get(receiver)
@@ -56,7 +56,7 @@ case class UserEventsRouterLive(data: Ref.Synchronized[UserStorage]) extends Use
 
   override def subscribeFor(
       user: Username,
-      events: Stream[Throwable, String],
+      events: Stream[Throwable, LittleGamesEvent],
   ): Task[Unit] =
     data.updateZIO(users =>
       (users.get(user) match {
@@ -67,10 +67,10 @@ case class UserEventsRouterLive(data: Ref.Synchronized[UserStorage]) extends Use
 }
 
 object UserEventsRouterLive {
-  type UserStorage = Map[Username, Hub[String]]
+  type UserStorage = Map[Username, Hub[LittleGamesEvent]]
 
   val layer: ZLayer[Any, Nothing, UserEventsRouter] =
     ZLayer.fromZIO(
-      Ref.Synchronized.make(Map.empty[Username, Hub[String]]).map(ref => UserEventsRouterLive(ref))
+      Ref.Synchronized.make(Map.empty[Username, Hub[LittleGamesEvent]]).map(ref => UserEventsRouterLive(ref))
     )
 }

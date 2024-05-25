@@ -1,12 +1,12 @@
 package com.github.killjoyer.modules.chat
 import com.github.killjoyer.domain.chats.Chat.ChatId
 import com.github.killjoyer.domain.users.Username
+import com.github.killjoyer.infrastructure.utils.newtype._
 import com.github.killjoyer.modules.chat.SimpleChatHandler.ChatMessage
 import com.github.killjoyer.services.traits.ChatsManager
-import com.github.killjoyer.infrastructure.utils.newtype._
+import io.circe.generic.JsonCodec
 import zio.UIO
 import zio.ZLayer
-import io.circe.generic.JsonCodec
 
 case class SimpleChatHandler(chatsManager: ChatsManager) {
   def registerToChat(chatId: ChatId, username: Username): UIO[Unit] =

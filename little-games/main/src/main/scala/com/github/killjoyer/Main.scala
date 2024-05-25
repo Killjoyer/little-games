@@ -10,8 +10,8 @@ import com.github.killjoyer.modules.bullsandcows.BullsAndCowsHandler
 import com.github.killjoyer.modules.bullsandcows.BullsAndCowsModule
 import com.github.killjoyer.modules.chat.SimpleChatHandler
 import com.github.killjoyer.modules.chat.SimpleChatModule
-import com.github.killjoyer.modules.echo.EchoHandler
-import com.github.killjoyer.modules.echo.EchoModule
+import com.github.killjoyer.modules.echo.UsersHandler
+import com.github.killjoyer.modules.echo.UsersModule
 import com.github.killjoyer.repositories.impls.RuDbDictionaryRepository
 import com.github.killjoyer.services.impls.BullsAndCowsServiceLive
 import com.github.killjoyer.services.impls.ChatsManagerLive
@@ -31,8 +31,8 @@ object Main extends ZIOAppDefault {
         ConfigLoader.load(),
         ZioHttpServer.layer,
         RouteProvider.layer,
-        EchoModule.layer,
-        EchoHandler.layer,
+        UsersModule.layer,
+        UsersHandler.layer,
         BullsAndCowsServiceLive.layer,
         BullsAndCowsModule.layer,
         BullsAndCowsHandler.layer,

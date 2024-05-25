@@ -2,7 +2,7 @@ package com.github.killjoyer.infrastructure.http
 
 import com.github.killjoyer.modules.bullsandcows.BullsAndCowsModule
 import com.github.killjoyer.modules.chat.SimpleChatModule
-import com.github.killjoyer.modules.echo.EchoModule
+import com.github.killjoyer.modules.echo.UsersModule
 import sttp.capabilities.WebSockets
 import sttp.capabilities.zio.ZioStreams
 import sttp.tapir.swagger.bundle.SwaggerInterpreter
@@ -12,7 +12,7 @@ import zio.Task
 import zio.ZLayer
 
 final case class RouteProvider(
-    echoModule: EchoModule,
+    echoModule: UsersModule,
     bullsAndCowsModule: BullsAndCowsModule,
     chatsModule: SimpleChatModule,
 ) {
@@ -32,7 +32,7 @@ final case class RouteProvider(
 
 object RouteProvider {
 
-  val layer: ZLayer[EchoModule & BullsAndCowsModule & SimpleChatModule, Nothing, RouteProvider] =
+  val layer: ZLayer[UsersModule & BullsAndCowsModule & SimpleChatModule, Nothing, RouteProvider] =
     ZLayer.fromFunction(RouteProvider.apply _)
 
 }

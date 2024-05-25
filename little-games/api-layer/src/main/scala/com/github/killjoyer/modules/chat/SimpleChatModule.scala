@@ -4,8 +4,8 @@ import com.github.killjoyer.domain.chats.Chat.ChatId
 import com.github.killjoyer.domain.users.Username
 import com.github.killjoyer.modules.AppEndpoint
 import com.github.killjoyer.modules.chat.SimpleChatHandler.ChatMessage
-import sttp.tapir.codec.newtype._
 import io.circe.generic.auto._
+import sttp.tapir.codec.newtype._
 import sttp.tapir.generic.auto._
 import sttp.tapir.json.circe._
 import sttp.tapir.ztapir._

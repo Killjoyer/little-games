@@ -2,8 +2,8 @@ package com.github.killjoyer.services
 
 import com.github.killjoyer.mocks.MockDictionaryRepository
 import com.github.killjoyer.services.domain.impls.BullsAndCowsServiceLive
-import com.github.killjoyer.services.traits.BullsAndCowsService
-import com.github.killjoyer.services.traits.BullsAndCowsService.BullsAndCowsResult
+import com.github.killjoyer.services.domain.traits.BullsAndCowsService
+import com.github.killjoyer.services.domain.traits.BullsAndCowsService.BullsAndCowsResult
 import zio.Scope
 import zio.ZIO
 import zio.test._
